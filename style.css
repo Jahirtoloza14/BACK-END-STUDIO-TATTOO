@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(183, 93, 93);
+}
+#contenedor1{
+    height: 900px;
+    background-color:rgb(246, 248, 248);
+}
+#boton1{
+    background-color: rgb(226, 43, 89);
+    padding: 2%;
+}
+#boton2{
+    background-color: rgb(226, 43, 89);
+    padding: 2%;
+}
