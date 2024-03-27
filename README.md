@@ -52,6 +52,6 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 - Lenguaje:  **TypeScript**.
 
 ## Base de Datos Relacional
-![Database](./library_loan_manag_db.png)
+![Database](./diagrama.png)
 
 

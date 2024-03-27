@@ -17,26 +17,18 @@ export class Artist extends BaseEntity {
     @Column({ name: "last_name" })
     lastName!: string;
 
+    @Column({ name: "porfolio" })
+    portfolio?: string;
 
-    @OneToOne(() => User, (user) => user.artist)
-    @JoinColumn({ name: "user_id" })
-    user!: User;
+    @OneToMany(() => Service, (design) => design)
+  service!: Service[];
 
-    @OneToMany (() => Appointment, (appointment)=> appointment.artist)
-   appointments! : Appointment[];
+  @OneToMany(() => Appointment, (appointment) => appointment.artist)
+  clientAppointments!: Appointment[];
 
-   @ManyToMany(() => User, (user) => user.appointments)
-   users!: User[];
-
-
-
-   @ManyToMany(() => Service, (tattoo) => tattoo.appointments)
-   tattoo!: Service[];
-
-   @ManyToMany(() => Service, (piercing) => piercing.appointments)
-   piercing!: Service[];
-
-   
+  @OneToOne(() => User, (user) => user.artist)
+  @JoinColumn({ name: "user_id" })
+  user!: User;
    
   
 }

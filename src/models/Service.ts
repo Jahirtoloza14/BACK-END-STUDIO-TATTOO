@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable, BaseEntity } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, BaseEntity } from "typeorm"
 import { Appointment } from "./Appointment";
 import { User } from "./User";
 import { Artist } from "./Artist";
@@ -10,20 +10,20 @@ export class Service extends BaseEntity{
     @PrimaryGeneratedColumn()
     id!: number
     
-    @Column({ name: "id_tattoo"})
-    idTattoo!: number
+    @Column({ name: "tattoo"})
+    id_tattoo!: number
+  
+    @Column({ name: "style"})
+    style!: string
 
-    @Column({ name: "id_piercing"})
-    idPiercing!: number
+    @Column({ name: "artist_id"})
+    artist_id!: number
 
-    @ManyToMany (() => Appointment, (appointment)=> appointment.artist)
-    appointments! : Appointment;
+  
 
-    @ManyToMany(() => User, (user) => user.appointments)
-    users!: User[];
-
-    @ManyToMany(() => Artist, (artist) => artist.appointments)
-    artists!: Artist[];
+    @ManyToOne(() => Artist, (artist) => artist.user)
+    @JoinColumn({ name: "artist_id" })
+    user!: Artist;
 
   
 

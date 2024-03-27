@@ -16,17 +16,20 @@ export class CreateServicesTable1710346397873 implements MigrationInterface {
                     },
                        { 
                         name: "tattoo",
-                       type: "int",
+                       type: "varchar",
                        length: "50",
                         
                     },
                     {
                         name: "style",
-                        type: "int",
+                        type: "varchar",
                         length: "50",
                         
-                    }
-                   
+                    },
+                    {
+                        name: "artist_id",
+                        type: "int",
+                      },
                     
                 ],
                 foreignKeys: [
