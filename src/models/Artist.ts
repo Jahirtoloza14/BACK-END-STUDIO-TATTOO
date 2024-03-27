@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, BaseEntity } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany,OneToOne,JoinColumn, BaseEntity } from "typeorm"
 import { Appointment } from "./Appointment";
-import { Shedule } from "./Shedule";
 import { Service } from "./Service";
 import { User } from "./User";
 
@@ -18,14 +17,18 @@ export class Artist extends BaseEntity {
     @Column({ name: "last_name" })
     lastName!: string;
 
-    @OneToMany (() => Appointment, (appointment)=> appointment.artists)
+
+    @OneToOne(() => User, (user) => user.artist)
+    @JoinColumn({ name: "user_id" })
+    user!: User;
+
+    @OneToMany (() => Appointment, (appointment)=> appointment.artist)
    appointments! : Appointment[];
 
    @ManyToMany(() => User, (user) => user.appointments)
    users!: User[];
 
-   @ManyToMany(() => Shedule, (shedule) => shedule.appointments)
-   shedules!: Shedule[];
+
 
    @ManyToMany(() => Service, (tattoo) => tattoo.appointments)
    tattoo!: Service[];

@@ -14,8 +14,9 @@ export class CreateUsersTable1710316953894 implements MigrationInterface {
                         isGenerated: true,
                         generationStrategy: "increment",
                     },
+                   
                     {
-                        name: "fist_name",
+                        name: "first_name",
                         type: "varchar",
                         length: "255",
                     },
@@ -34,9 +35,13 @@ export class CreateUsersTable1710316953894 implements MigrationInterface {
                         name: "password",
                         type: "varchar",
                         length: "255",
-                    },
-                    
+                    }, {
+                        name: "role_id",
+                        type: "int",
+                     
+                      },
                 ],
+                
             }),
             true
         );

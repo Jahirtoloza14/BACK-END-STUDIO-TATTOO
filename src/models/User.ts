@@ -1,8 +1,8 @@
-import {  Entity,  PrimaryGeneratedColumn, OneToMany, Column, ManyToMany, BaseEntity } from "typeorm"
+import {  Entity,  PrimaryGeneratedColumn, OneToMany, Column,OneToOne, ManyToMany,ManyToOne,JoinColumn, BaseEntity } from "typeorm"
 import { Appointment } from "./Appointment";
-import { Shedule } from "./Shedule";
 import { Artist } from "./Artist";
 import { Service } from "./Service";
+import { Role } from "./Role";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -10,10 +10,10 @@ export class User extends BaseEntity {
 id!: number
 
 @Column({ name: "first_name"})
-firstName!: string 
+first_name!: string 
 
 @Column({ name: "last_name" })
-lastName!: string;
+last_name!: string;
 
 @Column({ name: "email" })
 email!: string
@@ -23,20 +23,19 @@ password!: string
 
 
 
+@OneToOne(() => Artist, (artists) => artists.user)
+artist?: Artist;
 
-@OneToMany (() => Appointment, (appointment)=> appointment.user)
+
+
+@ManyToOne(() => Role, (role) => role.users)
+  @JoinColumn({ name: "role_id" })
+  role!: Role;
+
+
+
+@OneToMany (() => Appointment, (appointment)=> appointment.user_id)
 appointments! : Appointment[];
 
-@ManyToMany (()=> Shedule, (shedule)=> shedule.appointments)
-shedules!: Shedule[];
-
-@ManyToMany (() => Artist, (artist)=> artist.appointments)
-artists!: Artist[];
-
-@ManyToMany (() => Service, (tattoo)=> tattoo.appointments)
-tattoo!: Service[];
-
-@ManyToMany (() => Service, (piercing)=> piercing.appointments)
-piercing!: Service[];
 
 }

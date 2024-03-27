@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable, BaseEnti
 import { Appointment } from "./Appointment";
 import { User } from "./User";
 import { Artist } from "./Artist";
-import { Shedule } from "./Shedule";
+
 
 
 @Entity("services")
@@ -16,7 +16,7 @@ export class Service extends BaseEntity{
     @Column({ name: "id_piercing"})
     idPiercing!: number
 
-    @ManyToMany (() => Appointment, (appointment)=> appointment.services)
+    @ManyToMany (() => Appointment, (appointment)=> appointment.artist)
     appointments! : Appointment;
 
     @ManyToMany(() => User, (user) => user.appointments)
@@ -25,8 +25,7 @@ export class Service extends BaseEntity{
     @ManyToMany(() => Artist, (artist) => artist.appointments)
     artists!: Artist[];
 
-    @ManyToMany(() => Shedule, (shedule) => shedule.appointments)
-    shedule!: Shedule[];
+  
 
  
 

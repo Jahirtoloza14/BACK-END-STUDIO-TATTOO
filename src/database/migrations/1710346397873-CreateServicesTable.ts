@@ -14,20 +14,29 @@ export class CreateServicesTable1710346397873 implements MigrationInterface {
                         isGenerated: true,
                         generationStrategy: "increment",
                     },
-                       { name: "id_tattoo",
+                       { 
+                        name: "tattoo",
                        type: "int",
-                        
+                       length: "50",
                         
                     },
                     {
-                        name: "id_piercing",
+                        name: "style",
                         type: "int",
-                        
+                        length: "50",
                         
                     }
                    
                     
                 ],
+                foreignKeys: [
+                    {
+                      columnNames: ["artist_id"],
+                      referencedTableName: "artists",
+                      referencedColumnNames: ["id"],
+                    
+                    },
+                  ],
             }),
             true
         );

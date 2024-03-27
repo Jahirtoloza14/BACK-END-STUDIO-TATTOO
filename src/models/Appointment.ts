@@ -1,39 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne,JoinColumn, ManyToMany, JoinTable, BaseEntity  } from "typeorm";
-import {User} from "./User";
-import { Shedule } from "./Shedule";
-import { Artist } from "./Artist";
-import { Service } from "./Service";
+import {
+   Column,
+   ManyToOne,
+   PrimaryGeneratedColumn,
+   JoinColumn,
+   Entity,
+ } from "typeorm";
+ import { User } from "./User";
+ import { Artist } from "./Artist";
 
+ 
+ @Entity("appointments")
+ export class Appointment {
+   @PrimaryGeneratedColumn()
+   id!: number;
+ 
+   @Column()
+   user_id!: number;
+ 
+   @Column()
+   artist_id!: number;
+ 
+   @Column({ type: "date" })
+   date!: Date;
+ 
+   @Column({ type: "time" })
+   time!: Date;
+ 
 
-@Entity()
-export class Appointment extends BaseEntity{
-    @PrimaryGeneratedColumn ()
-    id!: number;
-
-    @ManyToOne(() => User, (user) => user.appointments)
-    @JoinColumn ({ name: "user_id" })
-    user!: User;
-
-    @ManyToOne( ()=> Shedule, (schedule) => schedule.appointments)
-    @JoinColumn ({ name: "schedule_id"})
-    shedule!: Shedule;
-
-    @ManyToOne( ()=> Artist, (artist) => artist.appointments)
-    @JoinColumn ({ name: "artist_id"})
-    artists!: Artist;
-
-
-    @ManyToMany(() => Service, (service) => service.appointments)
-    @JoinTable({
-       name: "services", // join table name
-       joinColumn: {
-          name: "tattoo_id", // first column of the join table
-          referencedColumnName: "id",
-       },
-       inverseJoinColumn: {
-          name: "piercing_id", // second column of the join table
-          referencedColumnName: "id",
-       },
-    })
-    services?: Service[];
-}
+ 
+   @ManyToOne(() => User, (user) => user.role)
+   @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+   user!: User;
+ 
+   @ManyToOne(() => Artist, (artist) => artist.user)
+   @JoinColumn({ name: "artist_id", referencedColumnName: "id" })
+   artist!: Artist;
+ }

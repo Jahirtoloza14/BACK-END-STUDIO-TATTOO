@@ -17,7 +17,7 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "fist_name",
+                        name: "first_name",
                         type: "varchar",
                         length: "255",
                     },
