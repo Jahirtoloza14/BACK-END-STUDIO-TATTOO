@@ -1,33 +1,30 @@
 import express from "express";
-import { userControler } from "../controllers/userController";
+import { UserControler } from "../controllers/userController";
 import { auth } from "../middlewares/auth";
-
+import { SuperAdmin } from "../middlewares/SuperAdmin";
 
 const router = express.Router();
 
 
-
-
-
-
-
 // endpoint registro
-router.post("/register",userControler.register);
+router.post("/register",UserControler.register);
 
 // endpoint login
-router.post("/login", userControler.login);
+router.post("/login", UserControler.login);
 
 // endpoint ver todos los usuarios
-router.get("/getall",userControler.getAll);
+router.get("/getall",UserControler.getAll);
 
 // endpoint ver  por usuario
-router.get("/:id",userControler.getById);
+router.get("/:id",UserControler.getById);
 
 // endpoint ver todos los artistas 
-router.get("/artists/list", userControler.allArtists);
+router.get("/artists/list", UserControler.allArtists);
 
 
 // endpoint actualizar
-router.patch("/:id", auth, userControler.update);
+router.patch("/:id", auth, UserControler.update);
+
+
 
 export default router;

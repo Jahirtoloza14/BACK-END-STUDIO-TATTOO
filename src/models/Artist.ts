@@ -18,7 +18,10 @@ export class Artist extends BaseEntity {
     lastName!: string;
 
     @Column({ name: "porfolio" })
-    portfolio?: string;
+    porfolio?: string;
+   
+    @Column({ name: "user_id" })
+    user_id?: string;
 
     @OneToMany(() => Service, (design) => design)
   service!: Service[];

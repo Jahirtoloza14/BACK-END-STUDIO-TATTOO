@@ -26,6 +26,15 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         type: "varchar",
                         length: "255",
                     },
+                    {
+                        name: "porfolio",
+                        type: "varchar",
+                        length: "50",
+                      },
+                      {
+                        name: "user_id",
+                        type: "int",
+                      },
                     
                 ],
             }),

@@ -16,7 +16,7 @@ import { Artist } from "../models/Artist";
 
 
 
-export const userControler = {
+export const UserControler = {
 
 
 

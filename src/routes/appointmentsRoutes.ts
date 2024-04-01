@@ -9,7 +9,7 @@ import { SuperAdmin } from "../middlewares/SuperAdmin";
 const router = express.Router();
 const appointmentController = new AppointmentController();
 
-// conseguir una cita
+// ver todas las citas 
 router.get("/get", auth, SuperAdmin, appointmentController.getAll);
 
 // crear una cita
@@ -20,3 +20,5 @@ router.get("/mysessions/:id", auth, appointmentController.getById);
 
 // ver citas  por un artista
 router.get("/myappointments/:id", auth, isArtist, appointmentController.getByArtist);
+
+export default router;
