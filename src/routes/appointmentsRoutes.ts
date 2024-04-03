@@ -21,4 +21,8 @@ router.get("/mysessions/:id", auth, appointmentController.getById);
 // ver citas  por un artista
 router.get("/myappointments/:id", auth, isArtist, appointmentController.getByArtist);
 
+// eliminar cita
+router.delete("/delete/:id", auth, appointmentController.deleteAppointment);
+// actualizar cita
+router.patch("/:id", auth, appointmentController.updateAppointment);
 export default router;

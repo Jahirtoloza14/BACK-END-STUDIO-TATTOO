@@ -25,6 +25,6 @@ router.get("/artists/list", UserControler.allArtists);
 // endpoint actualizar
 router.patch("/:id", auth, UserControler.update);
 
-
-
+// crear artistas 
+router.post("/artists/create", UserControler.createArtist);
 export default router;

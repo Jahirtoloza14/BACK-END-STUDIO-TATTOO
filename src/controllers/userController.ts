@@ -11,6 +11,7 @@ import { dataSource } from "../database/data-source";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import { Artist } from "../models/Artist";
+import { SaveOptions, RemoveOptions } from "typeorm";
 
 
 
@@ -203,6 +204,58 @@ async allArtists(
     });
   }
 },
+async createArtist(
+  req: Request<{}, {}, CreateUserRequestBody>,
+  res: Response
+): Promise<void | Response<any>> {
+  const userRepository = dataSource.getRepository(User);
+  const { first_name, last_name, email, password } = req.body;
+  try {
+    // Crear nuevo usuario
+    const dataUser: User = {
+      first_name,
+      last_name,
+      email,
+      password: bcrypt.hashSync(password, 10),
+      role: UserRoles.ARTIST,
+      appointments: [],
+      id: 0,
+      hasId: function (): boolean {
+        throw new Error("Function not implemented.");
+      },
+      save: function (options?: SaveOptions | undefined): Promise<User> {
+        throw new Error("Function not implemented.");
+      },
+      remove: function (options?: RemoveOptions | undefined): Promise<User> {
+        throw new Error("Function not implemented.");
+      },
+      softRemove: function (options?: SaveOptions | undefined): Promise<User> {
+        throw new Error("Function not implemented.");
+      },
+      recover: function (options?: SaveOptions | undefined): Promise<User> {
+        throw new Error("Function not implemented.");
+      },
+      reload: function (): Promise<void> {
+        throw new Error("Function not implemented.");
+      }
+    };
+    const newUser = await userRepository.save(dataUser);
+
+    const artistRepository = dataSource.getRepository(Artist);
+    const newArtist = await artistRepository.save({
+      user: newUser,
+      portfolio: "https://",
+    });
+    res.status(201).json(newArtist);
+  } catch (error: any) {
+    console.error("Error al crear artista:", error);
+    res.status(500).json({
+      message: "Error al crear artista",
+      error: error.message,
+    });
+  }
+},
+
 // eliminar usuario
 async deleteUser(req: Request, res: Response): Promise<void | Response<any>> {
   try {
