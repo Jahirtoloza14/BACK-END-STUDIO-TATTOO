@@ -12,16 +12,14 @@ export class Artist extends BaseEntity {
     id!: number
     
     @Column({ name: "first_name"})
-    firstName!: string
+    first_name!: string;
     
     @Column({ name: "last_name" })
-    lastName!: string;
+    last_name!: string;
 
     @Column({ name: "porfolio" })
-    porfolio?: string;
+    porfolio!: string;
    
-    @Column({ name: "user_id" })
-    user_id?: string;
 
     @OneToMany(() => Service, (design) => design)
   service!: Service[];

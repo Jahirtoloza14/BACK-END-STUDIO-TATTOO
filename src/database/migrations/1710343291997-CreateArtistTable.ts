@@ -20,6 +20,7 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         name: "first_name",
                         type: "varchar",
                         length: "255",
+                       
                     },
                     {
                         name: "last_name",
@@ -37,6 +38,14 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                       },
                     
                 ],
+                foreignKeys: [
+                    {
+                      columnNames: ["user_id"],
+                      referencedTableName: "users",
+                      referencedColumnNames: ["id"],
+                      
+                    },
+                  ],
             }),
             true
         );
