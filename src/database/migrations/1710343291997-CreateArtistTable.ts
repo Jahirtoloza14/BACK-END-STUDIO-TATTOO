@@ -20,17 +20,20 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         name: "first_name",
                         type: "varchar",
                         length: "255",
+                        default: null,
                        
                     },
                     {
                         name: "last_name",
                         type: "varchar",
                         length: "255",
+                        default: null,
                     },
                     {
                         name: "porfolio",
                         type: "varchar",
                         length: "50",
+                        default: null,
                       },
                       {
                         name: "user_id",

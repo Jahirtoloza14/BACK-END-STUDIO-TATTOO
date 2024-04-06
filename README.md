@@ -35,7 +35,7 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 | PATCH  | `/api/appointments/:id`                | Actualizar     | super admin |
 | DELETE | `/api/appointments/:id`                | Eliminar citas | client      |
 | GET    | `/api/appointments/mysessions/:id`     | Todas las citas| client      |
-| GET    | `/api/appointments/myappointments/:id` | Elimina citas  | artist      |
+| GET    | `/api/appointments/myappointments/:id` |ver citas artist| artist      |
 
 
 
@@ -47,7 +47,9 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 4. ``` $ Ejecutamos las migraciones ``` 
 5. ``` $ npm run dev ```
 6. Manualmente introducir en MysSQL ya que el sofware no lo actualiza desde typescript
-7. ``` $ ALTER TABLE artists MODIFY COLUMN variables(first_name..etc) VARCHAR(255) DEFAULT 'Nombre por defecto' ```
+7. ``` $ ALTER TABLE artists MODIFY COLUMN first_name VARCHAR(255) NULL;
+        ALTER TABLE artists MODIFY COLUMN last_name VARCHAR(255) NULL;
+        ALTER TABLE artists MODIFY COLUMN porfolio VARCHAR(255) NULL; ```
 
 ## Tecnologías
 - ORM: **TypeOrm**.

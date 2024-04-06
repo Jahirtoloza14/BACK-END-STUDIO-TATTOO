@@ -10,7 +10,7 @@ const router = express.Router();
 const appointmentController = new AppointmentController();
 
 // ver todas las citas 
-router.get("/get",auth, SuperAdmin,  appointmentController.getAll);
+router.get("/get",auth,  appointmentController.getAll);
 
 // crear una cita
 router.post("/newAppointment", auth, appointmentController.create);
