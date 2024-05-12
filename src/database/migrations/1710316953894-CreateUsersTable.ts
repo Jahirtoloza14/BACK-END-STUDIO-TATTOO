@@ -36,7 +36,7 @@ export class CreateUsersTable1710316953894 implements MigrationInterface {
                         type: "varchar",
                         length: "255",
                     }, {
-                        name: "role_id",
+                        name: "role_name",
                         type: "int",
                      
                       },

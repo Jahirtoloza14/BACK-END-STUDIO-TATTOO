@@ -35,20 +35,10 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         length: "50",
                         default: null,
                       },
-                      {
-                        name: "user_id",
-                        type: "int",
-                      },
+                     
                     
                 ],
-                foreignKeys: [
-                    {
-                      columnNames: ["user_id"],
-                      referencedTableName: "users",
-                      referencedColumnNames: ["id"],
-                      
-                    },
-                  ],
+                
             }),
             true
         );

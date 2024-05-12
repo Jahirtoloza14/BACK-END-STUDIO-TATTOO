@@ -1,7 +1,10 @@
 import express from "express";
 import { UserControler } from "../controllers/userController";
+
+import { isSuperAdmin } from "../middlewares/SuperAdmin";
+import { artistAuth } from "../middlewares/isArtist";
 import { auth } from "../middlewares/auth";
-import { SuperAdmin } from "../middlewares/SuperAdmin";
+
 
 const router = express.Router();
 
@@ -13,7 +16,7 @@ router.post("/register",UserControler.register);
 router.post("/login", UserControler.login);
 
 // endpoint ver todos los usuarios
-router.get("/getall",UserControler.getAll);
+router.get("/getall",auth,isSuperAdmin, UserControler.getAll);
 
 // endpoint ver  por usuario
 router.get("/:id",UserControler.getById);
@@ -23,8 +26,14 @@ router.get("/artists/list", UserControler.allArtists);
 
 
 // endpoint actualizar
-router.patch("/:id", auth, UserControler.update);
+router.patch("/:id", UserControler.update);
 
 // crear artistas 
 router.post("/artists/create", UserControler.createArtist);
+
+// eliminar 
+router.delete("/artists/delete",artistAuth, UserControler.delete);
+
+
 export default router;
+

@@ -1,38 +1,38 @@
-import {
-   Column,
-   ManyToOne,
-   PrimaryGeneratedColumn,
-   JoinColumn,
-   Entity,
- } from "typeorm";
- import { User } from "./User";
- import { Artist } from "./Artist";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn, BaseEntity } from 'typeorm';
+import { User } from './User';
+import { Artist } from './Artist';
 
- 
- @Entity("appointments")
- export class Appointment {
-   @PrimaryGeneratedColumn()
-   id!: number;
- 
-   @Column()
-   user_id!: number;
- 
-   @Column()
-   artist_id!: number;
- 
-   @Column({ type: "date" })
-   date!: Date;
- 
-   @Column({ type: "time" })
-   time!: Date;
- 
+@Entity()
+export class Appointment extends BaseEntity {
+    @PrimaryGeneratedColumn()
+    id!: number;
 
- 
-   @ManyToOne(() => User, (user) => user.role)
-   @JoinColumn({ name: "user_id", referencedColumnName: "id" })
-   user!: User;
- 
-   @ManyToOne(() => Artist, (artist) => artist.user)
-   @JoinColumn({ name: "artist_id", referencedColumnName: "id" })
-   artist!: Artist;
- }
+    @Column()
+    title!: string;
+
+    @Column()
+    description!: string;
+
+    @Column({ type: 'datetime' })
+    start_time!: Date;
+
+    @Column({ type: 'datetime' })
+    end_time!: Date;
+
+    @Column()
+    user_id!: string;
+
+    @Column()
+    artist_id!: string;
+
+
+    @Column()
+    location!: string;
+
+    @ManyToOne(() => User, user => user.appointments)
+    users!: User;
+
+    @ManyToOne(() => Artist, artist => artist.appointments)
+    artists!: Artist;
+
+}

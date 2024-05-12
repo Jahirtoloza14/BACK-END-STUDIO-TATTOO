@@ -1,28 +1,31 @@
 import express from "express";
-import { AppointmentController } from "../controllers/AppointmentController";
+
+
+import { artistAuth } from "../middlewares/isArtist";
+
+import AppointmentControler from "../controllers/AppointmentController";
 import { auth } from "../middlewares/auth";
-import { isArtist } from "../middlewares/isArtist";
-import { SuperAdmin } from "../middlewares/SuperAdmin";
+import { isSuperAdmin } from "../middlewares/SuperAdmin";
 
 
 
 const router = express.Router();
-const appointmentController = new AppointmentController();
+
 
 // ver todas las citas 
-router.get("/get",auth,  appointmentController.getAll);
+router.get("/get",auth,isSuperAdmin, AppointmentControler.getAppointments);
 
 // crear una cita
-router.post("/newAppointment", auth, appointmentController.create);
+router.post("/newAppointment", AppointmentControler.create );
 
 // buscar una cita por id
-router.get("/mysessions/:id", auth, appointmentController.getById);
+router.get("/mysessions/:id", );
 
 // ver citas  por un artista
-router.get("/myappointments/:id", auth, isArtist, appointmentController.getByArtist);
+router.get("/myappointments/:id", );
 
 // eliminar cita
-router.delete("/delete/:id", auth, appointmentController.deleteAppointment);
+router.delete("/delete/:id", );
 // actualizar cita
-router.patch("/:id", auth, appointmentController.updateAppointment);
+router.patch("/:id", );
 export default router;

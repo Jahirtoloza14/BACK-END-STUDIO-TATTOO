@@ -2,6 +2,7 @@ export interface CreateUserRequestBody {
     first_name: string;
     last_name: string;
     email: string;
+    role_name:string;
     password: string;
   }
   export interface CreateAppointmentsRequestBody {
@@ -15,10 +16,10 @@ export interface CreateUserRequestBody {
     password: string;
   }
   export interface TokenData {
-    userId: string;
-    userRoles: string;
+    user_id: number,
+    role: string
   }
   export interface CreateArtistRequestBody {
-    user_id: string;
+    user_id: number;
     portfolio: string;
   }

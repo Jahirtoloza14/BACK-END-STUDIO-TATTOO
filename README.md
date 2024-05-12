@@ -22,10 +22,14 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 
 | Método | URI                              | Acción                     | Rol     |
 |--------|----------------------------------|----------------------------|---------|
-| POST    | `/api/users/register`           | Registrar                  | client  |
+| POST   | `/api/users/register`            | Registrar                  | client  |
+| POST   | `/api/users/artists/create`      |crear artista               | artist  |
 | POST   | `/api/users/login `              | Actualiza perfil           | client  |
 | GET    | `/api/users/:id  `               | Obtener usuario            | client  |
 | GET    | `/api/users/artists/list`        | Obtener lista de artistas  | client  |
+| GET    | `/api/users//getall  `           | ver todos los usuarios     | client  |
+| Patch  | `/api/users/:id  `               | actualizar datos de usuario| client  |
+
 
 ### Appointments
 
@@ -34,8 +38,9 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 | POST   | `/api/appointments/newAppointment`     | Crear cita     | client      |
 | PATCH  | `/api/appointments/:id`                | Actualizar     | super admin |
 | DELETE | `/api/appointments/:id`                | Eliminar citas | client      |
-| GET    | `/api/appointments/mysessions/:id`     | Todas las citas| client      |
+| GET    | `/api/appointments/mysessions/:id`     | ver cita por id| client      |
 | GET    | `/api/appointments/myappointments/:id` |ver citas artist| artist      |
+| GET    | `/api/appointments/get`                |ver citas artist| client      |
 
 
 

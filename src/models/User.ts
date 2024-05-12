@@ -1,10 +1,8 @@
 import {  Entity,  PrimaryGeneratedColumn, OneToMany, Column,OneToOne, ManyToMany,ManyToOne,JoinColumn, BaseEntity } from "typeorm"
 import { Appointment } from "./Appointment";
-import { Artist } from "./Artist";
-import { Service } from "./Service";
 import { Role } from "./Role";
 
-@Entity("users")
+@Entity('users')
 export class User extends BaseEntity {
 @PrimaryGeneratedColumn()
 id!: number
@@ -21,20 +19,18 @@ email!: string
 @Column({ name: "password" })
 password!: string
 
-
-
-@OneToOne(() => Artist, (artists) => artists.user)
-artist?: Artist;
+@Column({ name: "role_name" })
+role_name!: string
 
 
 
 @ManyToOne(() => Role, (role) => role.users)
-  @JoinColumn({ name: "role_id" })
+  @JoinColumn({ name: "role_name" })
   role!: Role;
 
 
 
-@OneToMany (() => Appointment, (appointment)=> appointment.user_id)
+@OneToMany (() => Appointment, (appointment)=> appointment.users)
 appointments! : Appointment[];
 
 
