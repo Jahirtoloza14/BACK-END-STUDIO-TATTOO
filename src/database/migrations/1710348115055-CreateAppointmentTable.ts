@@ -9,7 +9,8 @@ export class CreateAppointmentTable1710348115055 implements MigrationInterface {
         name: "appointment",
         columns: [
           {
-            name: "id", type: "int",
+            name: "id", 
+            type: "int",
             isPrimary: true,
             isGenerated: true,
             generationStrategy: "increment"
@@ -19,23 +20,7 @@ export class CreateAppointmentTable1710348115055 implements MigrationInterface {
             name: "title",
             type: "varchar"
           },
-
-          {
-            name: "description",
-            type: "text"
-          },
-
-          {
-            name: "start_time",
-            type: "datetime"
-          },
-          { name: "end_time", type: "datetime" },
-
-          {
-            name: "location",
-            type: "varchar"
-          },
-          {
+ {
             name: "user_id",
             type: "int"
           },
@@ -43,24 +28,34 @@ export class CreateAppointmentTable1710348115055 implements MigrationInterface {
           {
             name: "artist_id",
             type: "int"
-          }
-        
+          },
+          
+   
+
+          {
+            name: "start_time",
+            type: "datetime"
+          },
+          { name: "end_time",
+           type: "datetime" },
+
+          {
+            name: "location",
+            type: "varchar"
+          },
+         
         ],
         foreignKeys: [
           {
             columnNames: ["user_id"],
-            referencedTableName: "users",
+            referencedTableName: "user",
             referencedColumnNames: ["id"],
 
           },
-          {
-            columnNames: ["artist_id"],
-            referencedTableName: "artists",
-            referencedColumnNames: ["id"],
-
-          }
+          
         ]
       }));
+      true
   }
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable("appointment");

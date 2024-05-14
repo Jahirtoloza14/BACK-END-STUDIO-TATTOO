@@ -11,7 +11,10 @@ export class Appointment extends BaseEntity {
     title!: string;
 
     @Column()
-    description!: string;
+    user_id!: number;
+
+    @Column()
+    artist_id!: number;
 
     @Column({ type: 'datetime' })
     start_time!: Date;
@@ -19,20 +22,18 @@ export class Appointment extends BaseEntity {
     @Column({ type: 'datetime' })
     end_time!: Date;
 
-    @Column()
-    user_id!: string;
-
-    @Column()
-    artist_id!: string;
+   
 
 
     @Column()
     location!: string;
 
-    @ManyToOne(() => User, user => user.appointments)
+    @ManyToOne(() => User, (user) => user.appointments)
+    @JoinColumn({ name: "user_id", referencedColumnName: "id" })
     users!: User;
 
-    @ManyToOne(() => Artist, artist => artist.appointments)
+    @ManyToOne(() => Artist, (artist) => artist.appointments)
+    @JoinColumn({ name: "artist_id", referencedColumnName: "id" })
     artists!: Artist;
 
 }

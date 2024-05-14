@@ -7,7 +7,7 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
    
         await queryRunner.createTable(
             new Table({
-                name: "artists",
+                name: "artist",
                 columns: [
                     {
                         name: "id",
@@ -15,6 +15,10 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                         isPrimary: true,
                         isGenerated: true,
                         generationStrategy: "increment",
+                    },
+                    {
+                        name: "user_id",
+                        type: "int",
                     },
                     {
                         name: "first_name",
@@ -38,14 +42,20 @@ export class CreateArtistTable1710343291997 implements MigrationInterface {
                      
                     
                 ],
-                
+                foreignKeys: [  
+                    {
+                        columnNames: ["user_id"],
+                        referencedTableName: "user",
+                        referencedColumnNames: ["id"],
+                     
+                    }]
             }),
             true
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("artists");
+        await queryRunner.dropTable("artist");
     }
 
 }

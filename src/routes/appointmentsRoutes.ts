@@ -3,9 +3,10 @@ import express from "express";
 
 import { artistAuth } from "../middlewares/isArtist";
 
-import AppointmentControler from "../controllers/AppointmentController";
+
 import { auth } from "../middlewares/auth";
 import { isSuperAdmin } from "../middlewares/SuperAdmin";
+import { createAppointments } from "../controllers/AppointmentController";
 
 
 
@@ -13,10 +14,10 @@ const router = express.Router();
 
 
 // ver todas las citas 
-router.get("/get",auth,isSuperAdmin, AppointmentControler.getAppointments);
+router.get("/get",auth,isSuperAdmin);
 
 // crear una cita
-router.post("/newAppointment", AppointmentControler.create );
+router.post("/newAppointment", createAppointments );
 
 // buscar una cita por id
 router.get("/mysessions/:id", );
