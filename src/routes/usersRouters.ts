@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import { UserControler } from "../controllers/userController";
 
 import { isSuperAdmin } from "../middlewares/SuperAdmin";
@@ -19,14 +19,17 @@ router.post("/login", UserControler.login);
 router.get("/getall",auth,isSuperAdmin, UserControler.getAll);
 
 // endpoint ver  por usuario
-router.get("/:id",UserControler.getById);
+router.get("/profile", UserControler.getLogedUser);
+
+
+router.put('/profile/update', UserControler.updateLogedUser);
+
 
 // endpoint ver todos los artistas 
 router.get("/artists/list", UserControler.allArtists);
 
 
-// endpoint actualizar
-router.patch("/:id", UserControler.update);
+
 
 // crear artistas 
 router.post("/artists/create", UserControler.createArtist);

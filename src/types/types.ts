@@ -16,8 +16,11 @@ export interface CreateUserRequestBody {
     password: string;
   }
   export interface TokenData {
+    first_name: string,
+    last_name: string,
     user_id: number,
-    role: string
+    role: string,
+    
   }
   export interface CreateArtistRequestBody {
     user_id: number;

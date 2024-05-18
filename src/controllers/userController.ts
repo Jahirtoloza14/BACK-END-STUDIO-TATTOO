@@ -107,9 +107,10 @@ export const UserControler = {
 
 
       const roleName = user.role.role_name;
-
+      
       // generar token 
       const token =jwt.sign({
+        email: user.email,
         userId: user.id,
         role: roleName,
       },
@@ -182,10 +183,11 @@ export const UserControler = {
   async getById(req: Request, res: Response): Promise<void> {
     try {
       const id = +req.params.id;
-
+    
       const userRepository = dataSource.getRepository(User);
       const user = await userRepository.findOneBy({
         id: id,
+        
       });
 
       if (!user) {
@@ -202,8 +204,74 @@ export const UserControler = {
     }
   },
 
+  async getProfileById(req:Request,res:Response){
+    try {
+        const userId = Number(req.params.id);
 
+        const user = await User.findOne({
+           relations: {
+              role: true,
+           },
+           where: { id: userId },
+        });
 
+       
+
+        if (!user) {
+           res.status(404).json({ message: "User not found" });
+           return;
+        }
+
+        res.json(user);
+     } catch (error) {
+        
+        res.status(500).json({
+           message: "Failed to retrieve user",
+        });
+     }
+},
+
+async getLogedUser(req:Request,res:Response){
+  try {
+      const userId = req.tokenData?.user_id;
+      console.log(userId);
+      const user = await User.findOne({
+          relations:{
+              role:true
+          },
+          where:{
+              id:userId
+          }
+      });
+      res.json(user).status(200).json({message:"User found successfully"});
+
+  }catch(error){
+      res.status(500).json({message:"Something went wrong"});
+  }
+},
+async updateLogedUser(req:Request,res:Response){
+  try {
+      const userId = req.tokenData?.user_id;
+      const {first_name,last_name,email} = req.body;
+      const user = await User.findOne({where:{id:userId}});
+
+      if(!user){
+          res.status(404).json({message:"User not found"});
+          return;
+      }
+
+      user.first_name = first_name;
+      user.last_name = last_name;
+      user.email = email;
+      
+      
+
+      await user.save();
+      res.status(200).json(user);
+  } catch (error) {
+      res.status(500).json({message:"Something went wrong"});
+  }
+},
   //actualizar datos de usuario
 
   async update(req: Request, res: Response): Promise<void | Response<any>> {
