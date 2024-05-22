@@ -37,14 +37,10 @@ export  const tokenAdmin = (req: Request, res: Response, next: NextFunction) => 
 
 
 const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
- 
-    console.log(req.tokenData.role); 
      
-
- 
   
 
-    if (req.tokenData.role !=="admin") {
+    if (req.tokenData.role_name !=="admin") {
       
       
         return  res.json({
@@ -53,75 +49,33 @@ const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
             
             
         })
-    }
-  
-  
-    
-  
-  
+      }
   
   
     
     next()
 
 }; 
+export const authorizeMiddleware=(allowedRoles:string[])=>{
+
+  return (req:Request,res:Response,next:NextFunction)=>{
+      const userRole = req.tokenData.role_name;
+
+      if(userRole === UserRoles.ADMIN.role_name){
+          return next();
+      }
+
+      if(allowedRoles.includes(userRole)){
+          next();
+      }else{
+          res.status(401).json({message:"Unauthorized"})
+      }
+  }
+}
 
 
 export { isSuperAdmin }
 
 
-
-
-
-/*export const auth = (req: Request, res: Response, next: NextFunction) => {
-  req.headers;
-
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      message: "Requiere autorización",
-    });
-  }
-
-  try {
-    const decoded = jwt.verify(token, "123") as jwtPayload;
-
-    console.log(decoded);
-
-    const decodedPayload: TokenData = {
-      userId: decoded.userId,
-      userRoles: decoded.userRoles,
-    };
-
-    req.TokenData = decodedPayload;
-
-    next();
-  } catch (error) {
-    res.status(StatusCodes.UNAUTHORIZED).json({
-      message: "NO AUTORIZADO",
-    });
-  }
-};*/
-
-
-
-
-/*export const admin =(req: Request, res: Response, next: NextFunction) => {
-  const token = <string>req.headers.authorization?.split(" ")[1];   //<string>req.headers['auth'];
-  let jwtPayload;
-  try {
-    jwtPayload = <any>jwt.verify(token, config.jwtSecret);
-    res.locals.jwtPayload = jwtPayload;
-  } catch (e) {
-    return res.status(401).send({message:"No authorized"});
-  }
-
-const {userId, email}= jwtPayload;
-const newToken= jwt.sign({userId, email}, config.jwtSecret, {expiresIn: '1h'})
-res.header( 'token', newToken);
-next();
-};
-*/
 
 
