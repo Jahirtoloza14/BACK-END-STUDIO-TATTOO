@@ -89,7 +89,8 @@ export const UserControler = {
       if (!ispasswordValid) {
         res.status(StatusCodes.BAD_REQUEST).json({
           message: "Correo electrónico o contraseña incorrectos",
-        });;
+        });
+        return;
       }
 
         //generar user Role Name
@@ -222,27 +223,21 @@ export const UserControler = {
 
 async getLogedUser(req:Request,res:Response){
   try {
-      const userId = req.tokenData.user_id;
-      console.log(userId);
-      
-      const user = await User.findOne({
-          relations:{
-              role:true
-          },
-          where:{
-              id:userId
-          }
-      });
-      if (!user) {
-        res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
-        return;
-      }
-  
-      res.status(StatusCodes.OK).json({ message: "User found successfully", user });
-  
-    } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong" });
-    }
+    const userId = req.tokenData?.user_id;
+    console.log(userId);
+    const user = await User.findOne({
+        relations:{
+            role:true
+        },
+        where:{
+            id:userId
+        }
+    });
+    res.json(user).status(200).json({message:"User found successfully"});
+
+}catch(error){
+    res.status(500).json({message:"Something went wrong"});
+}
 },
 
 async updateLogedUser(req:Request,res:Response){
@@ -264,8 +259,10 @@ async updateLogedUser(req:Request,res:Response){
 
       await user.save();
       res.status(StatusCodes.OK).json(user);
+      return;
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "Something went wrong" });
+    return;
   }
 }
 

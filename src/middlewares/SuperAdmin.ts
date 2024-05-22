@@ -64,11 +64,17 @@ export const authorizeMiddleware=(allowedRoles:string[])=>{
       if(userRole === UserRoles.ADMIN.role_name){
           return next();
       }
+      if(userRole === UserRoles.CLIENT.role_name){
+        return next();
+    }
+      if(userRole === UserRoles.ARTIST.role_name){
+      return next();
+    }
+      else{
+                res.status(401).json({message:"Unauthorized"})
 
-      if(allowedRoles.includes(userRole)){
-          next();
-      }else{
-          res.status(401).json({message:"Unauthorized"})
+         
+        
       }
   }
 }
