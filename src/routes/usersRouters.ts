@@ -19,7 +19,7 @@ router.post("/login", UserControler.login);
 router.get("/getall",auth,isSuperAdmin, UserControler.getAll);
 
 // endpoint ver  por usuario
-router.get("/profile",auth,authorizeMiddleware(["Artist","Client"]), UserControler.getLogedUser);
+router.get("/profile",auth,authorizeMiddleware(["Client","Artist","Admin"]), UserControler.getLogedUser);
 
 
 router.put('/profile/update', UserControler.updateLogedUser);
