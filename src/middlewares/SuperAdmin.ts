@@ -80,6 +80,25 @@ export const authorizeMiddleware=(allowedRoles:string[])=>{
 }
 
 
+export const authorizeMiddlewareAdmin=(allowedRoles:string[])=>{
+
+  return (req:Request,res:Response,next:NextFunction)=>{
+      const userRole = req.tokenData.role_name;
+
+      if(userRole === UserRoles.ADMIN.role_name){
+          return next();
+      }
+   
+      else{
+                res.status(401).json({message:"NO PASS , Unauthorized"})
+
+         
+        
+      }
+  }
+}
+
+
 export { isSuperAdmin }
 
 

@@ -11,11 +11,11 @@ export const auth = (req:Request,res:Response,next:NextFunction) => {
    
   const token = req.headers.authorization?.split(" ")[1];
   
-
   if(!token){
-      res.status(401).json({message: "Unauthorized"});
-      return;
-  }
+    res.status(401).json({message: "No token Unauthorized"});
+    return;
+}
+  
 
   try{
   
@@ -25,7 +25,7 @@ export const auth = (req:Request,res:Response,next:NextFunction) => {
           ) as JwtPayload
    
       req.tokenData = {
-          user_id: decoded.user_id,
+          id: decoded.user_id,
           role_name: decoded.role_name,
           }
       
@@ -34,7 +34,7 @@ export const auth = (req:Request,res:Response,next:NextFunction) => {
       next();
       
   }catch(error){
-      res.status(401).json({message: "Unauthorized"});
+      res.status(401).json({message: "no pass your token is diferent ,Unauthorized"});
       
       return;
   }

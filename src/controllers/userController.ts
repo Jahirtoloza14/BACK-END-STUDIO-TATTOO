@@ -1,30 +1,19 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import bcrypt from 'bcrypt';
-
-import {
-  CreateUserRequestBody,
-  TokenData,
-} from "../types/types";
+import {TokenData} from "../types/types";
 import { dataSource } from "../database/data-source";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-
-
-
+import { UserRoles } from "../constants/UserRoles";
 
 
 export const UserControler = {
 
-
-
-  // registrar usuario
-  async register(
-    req: Request<{}, {}, CreateUserRequestBody>,
-    res: Response
-  ): Promise<void | Response<any>> {
+  // registrar usuario como rol Cliente
+  async register(req: Request, res: Response): Promise<void > {
     const userRepository = dataSource.getRepository(User);
-    const { first_name, last_name, email, password, role_name } = req.body;
+    const { first_name, last_name, email, password } = req.body;
     try {
       // Crear nuevo usuario
       const newUser = userRepository.create({
@@ -32,19 +21,21 @@ export const UserControler = {
         last_name: last_name,
         email: email,
         password: bcrypt.hashSync(password, 10),
-        role_name: role_name
+        role_name: UserRoles.ADMIN.role_name
+
       });
 
       await userRepository.save(newUser);
       res.status(StatusCodes.CREATED).json({
         message: "Usuario creado con éxito",
       });
+      return
     } catch (error: any) {
-      console.error("Error al registrarse:", error);
+      
       res.status(500).json({
         message: "Error al registrarse",
         error: error.message,
-      });
+      });return
     }
   },
 
@@ -52,34 +43,34 @@ export const UserControler = {
   // login usuario
   async login(req: Request, res: Response): Promise<void> {
 
-    
     try {
        const { email, password } = req.body;
       // Validar existencia de email y contraseña
       if (!email || !password) {
-        res.status(StatusCodes.BAD_REQUEST).json({
+        res.status(400).json({
           message: "Se requiere correo electrónico o contraseña",
         });
         return;
       }
       // Encontrar un usuario por email
       const user = await User.findOne({
-        relations: {
-          role: true,
-        }, where: {
+        where: {
           email: email,
         },
         select: {
-          id: true, email: true, password: true
-        },
+          id: true, email: true, password: true,
+         
+            role_name: true,
+          },
+        
       });
 
       // Verificar usuario inexistente
       if (!user) {
-        res.status(StatusCodes.BAD_REQUEST).json({
+        res.status(400).json({
           message: "Correo electrónico o contraseña incorrectos",
         });
-        return;
+       return;
       }
 
       // Verificar contraseña si el usuario existe
@@ -87,16 +78,20 @@ export const UserControler = {
 
       // Verificar contraseña valida
       if (!ispasswordValid) {
-        res.status(StatusCodes.BAD_REQUEST).json({
+        res.status(500).json({
           message: "Correo electrónico o contraseña incorrectos",
         });
         return;
       }
 
+    
+
+
+
         //generar user Role Name
-      const roleName = user.role.role_name;
+      const roleName = user.role_name;
       const tokenPayload: TokenData ={
-        user_id:user.id,
+        id:user.id,
         role_name: roleName
       }
 
@@ -109,17 +104,20 @@ export const UserControler = {
       );
       
 
-      res.status(200).json({
-        message: "Login",
+      res.status(StatusCodes.OK).json({
+        message: "Login exitoso",
         token,
       });
-
+      return;
 
     } catch (error) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      res.status(400).json({
         message: "Error al iniciar sesión",
         error: (error as any).message,
-      });
+
+     
+
+      }); return
     }
   },
 
@@ -132,117 +130,54 @@ export const UserControler = {
 
 
   // mostrar todos los usuarios
-  async getAll(req: Request, res: Response): Promise<void> {
-    try{
-      const page = Number(req.query.page) || 1;
-      const limit = Number(req.query.limit) || 10;
-  
-      const [users, totalUsers] = await User.findAndCount({
-        
-        relations: {
-          role: true,
-        }, 
-        select :{
-          role: {
-            role_name: true,
-          },
-          
-        },
-        skip: (page- 1) * limit,
-        take: limit,
-      });
-  
-   if ( totalUsers === 0) {
-    res.status(StatusCodes.NOT_FOUND).json({ message: "No autorizado" });
-    return;
-   }
-   const totalPages= Math.ceil(totalUsers / limit);
-   res.status(StatusCodes.OK).json({ users, totalPages });
-  }catch (error){
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: "Failed to retrieve users",
-    });
-  }
-}  
+  async getAll(req:Request,res:Response){
+    try {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const [users,totalUsers] = await User.findAndCount(
+            {
+                select:{
+                    id:true,
+                    first_name:true,
+                    last_name:true,
+                    email:true,
+                    role_name:true
+                    
+                }
+            }
+        );
+        res.json(users);
+    }catch(error){
+        res.status(500).json({message:"Something went wrong"});
+    }
+}
    ,
   
 
-
-  //mostrar usuarios por id
- /* async getById(req: Request, res: Response): Promise<void> {
-    try {
-      const id = +req.params.id;
-    
-      const userRepository = dataSource.getRepository(User);
-      const user = await userRepository.findOneBy({
-        id: id,
-        
-      });
-
-      if (!user) {
-     res.status(404).json({
-          message: "User not found",
-        });
-      }
-
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error while getting user",
-      });
-    }
-  },
-*/
- /* async getProfileById(req:Request,res:Response){
-    try {
-        const userId = Number(req.params.id);
-        console.log(userId);
-        
-        const user = await User.findOne({
-           relations: {
-              role: true,
-           },
-           where: { id: userId },
-        });
-
-       
-
-        if (!user) {
-           res.status(404).json({ message: "User not found" });
-           return;
-        }
-
-        res.json(user);
-     } catch (error) {
-        
-        res.status(500).json({
-           message: "Failed to retrieve user",
-        });
-     }
-},*/
-
 async getLogedUser(req:Request,res:Response){
   try {
-    const userId = req.tokenData?.user_id;
+    const userId = req.tokenData?.id;
     console.log(userId);
     const user = await User.findOne({
-        relations:{
-            role:true
-        },
+     relations: {
+      role: true
+     },
         where:{
             id:userId
         }
     });
     res.json(user).status(200).json({message:"User found successfully"});
-
+return
 }catch(error){
     res.status(500).json({message:"Something went wrong"});
 }
+return
 },
 
 async updateLogedUser(req:Request,res:Response){
   try {
-      const userId = req.tokenData?.user_id;
+      const userId = req.tokenData?.id;
       const {first_name,last_name,email} = req.body;
       const user = await User.findOne({where:{id:userId}});
 

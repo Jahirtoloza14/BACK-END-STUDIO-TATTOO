@@ -5,8 +5,8 @@ import { artistAuth } from "../middlewares/isArtist";
 
 
 import { auth } from "../middlewares/auth";
-import { isSuperAdmin } from "../middlewares/SuperAdmin";
-import { createAppointments } from "../controllers/AppointmentController";
+import { authorizeMiddleware, isSuperAdmin } from "../middlewares/SuperAdmin";
+import { createAppointments, getAllApointments } from "../controllers/AppointmentController";
 
 
 
@@ -14,10 +14,10 @@ const router = express.Router();
 
 
 // ver todas las citas 
-router.get("/get",auth,isSuperAdmin);
+router.get("/get",auth,authorizeMiddleware(["Admin"]), getAllApointments);
 
 // crear una cita
-router.post("/newAppointment", createAppointments );
+router.post("/newAppointment",auth,authorizeMiddleware(["Client"]),createAppointments );
 
 // buscar una cita por id
 router.get("/mysessions/:id", );

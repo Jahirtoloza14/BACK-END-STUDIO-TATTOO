@@ -7,7 +7,7 @@ export const createAppointments = async (req: Request, res: Response) => {
         const artist_id = req.body.artist_id;
         const start_time = req.body.start_time;
         const end_time = req.body.end_time;
-        const location = req.body.location;
+      const location= req.body.location
         
     
         const newTattoo = await Appointment.create({
@@ -16,7 +16,7 @@ export const createAppointments = async (req: Request, res: Response) => {
           artist_id: artist_id,
           start_time: start_time,
           end_time: end_time,
-          location: location,
+         location: location
           
         }).save();
     
@@ -32,4 +32,33 @@ export const createAppointments = async (req: Request, res: Response) => {
           error: error,
         });
       }
+
+      
     };
+    export const  getAllApointments= async (req:Request,res:Response) =>{
+      try {
+          const page = Number(req.query.page) || 1;
+          const limit = Number(req.query.limit) || 10;
+
+          const [jobdates,totalJobdates] = await Appointment.findAndCount(
+              {
+                  select:{
+                    title: true,
+                    user_id: true,
+                    artist_id: true,
+                    start_time: true,
+                    end_time: true,
+                   location: true
+                  }
+              }
+          );
+          
+          res.json(jobdates);
+
+      }catch(error){
+          res.status(500).json({message:"Something went wrong"});
+      }
+  }
+
+    
+    ;

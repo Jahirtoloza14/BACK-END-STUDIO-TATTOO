@@ -16,11 +16,11 @@ export interface CreateUserRequestBody {
     password: string;
   }
   export interface TokenData {
-    user_id: number,
-    role_name: string,
+    id: number,
+    role_name: string;
     
   }
   export interface CreateArtistRequestBody {
-    user_id: number;
+    id: number;
     portfolio: string;
   }
