@@ -58,7 +58,42 @@ export const createAppointments = async (req: Request, res: Response) => {
       }catch(error){
           res.status(500).json({message:"Something went wrong"});
       }
-  }
+  } ;
+  export const update = async (req:Request,res:Response) =>{
+    try {
+        const id = Number(req.params.id);
+        const {user_id,title,artist_id,start_time,end_time,location} = req.body;
+        const appointmentDate = await Appointment.findOne({where:{id:id}});
+            
+        if(!appointmentDate){
+            res.status(404).json({message:"Jobdate not found"});
+            return;
+        }
+        appointmentDate.title = title;
+        appointmentDate.user_id = user_id;
+        appointmentDate.artist_id = artist_id;
+        appointmentDate.start_time = start_time;
+        appointmentDate.end_time = end_time;
+        appointmentDate.location = location;
 
-    
-    ;
+        await appointmentDate.save();
+        res.json(appointmentDate);
+    }catch(error){
+        res.status(500).json({message:"Something went wrong"});
+    }
+};
+
+export const deleteAppointment= async (req:Request,res:Response)=>{
+  try {
+      const id = Number(req.params.id);
+      const appointmentDate = await Appointment.findOne({where:{id:id}});
+      if(!appointmentDate){
+          res.status(404).json({message:"Jobdate not found"});
+          return;
+      }
+      await appointmentDate.remove();
+      res.json({message:"Jobdate deleted"});
+  }catch(error){
+      res.status(500).json({message:"Something went wrong"});
+  }
+}
