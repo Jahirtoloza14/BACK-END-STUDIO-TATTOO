@@ -2,7 +2,7 @@ import express, { NextFunction } from "express";
 import { UserControler } from "../controllers/userController";
 
 import { authorizeMiddleware, authorizeMiddlewareAdmin, isSuperAdmin } from "../middlewares/SuperAdmin";
-import { artistAuth } from "../middlewares/isArtist";
+import { artistAuth, isArtist } from "../middlewares/isArtist";
 import { auth } from "../middlewares/auth";
 import { Appointment } from "../models/Appointment";
 import { createAppointments, getAllApointments } from "../controllers/AppointmentController";
@@ -27,11 +27,10 @@ router.get("/profile",auth,authorizeMiddleware(["Client","Artist","Admin"]), Use
 router.put('/profile/update', UserControler.updateLogedUser);
 
 
+
+
 // endpoint ver todos los artistas 
 router.get("/artists/list");
-
-
-
 
 // crear artistas 
 router.post("/artists/create");

@@ -2,11 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from "../config/config";
+import { Artist } from "../models/Artist";
+import { Appointment } from "../models/Appointment";
 
-/*export const isArtist = (req: Request, res: Response, next: NextFunction) => {
+export const isArtist = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.tokenData);
 
-  const roles = req.tokenData.userRoles;
+  const roles = req.tokenData.role_name;
 
   if (!roles.includes("artist")) {
     return res.status(StatusCodes.FORBIDDEN).json({
@@ -15,9 +17,9 @@ import config from "../config/config";
   }
 
   next();
-};*/
+};
 
-/*export const artistMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const artistMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -43,7 +45,7 @@ import config from "../config/config";
       message: "Token inválido o expirado",
     });
   }
-};*/
+}
 
 
 
@@ -60,7 +62,7 @@ export const artistAuth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
     // Verificar si el usuario tiene el rol de artista
-    if (decoded.role !== 'artist') {
+    if (decoded.roleName !== 'client') {
       return res.status(403).send("Acceso prohibido para artistas"); // Acceso prohibido para artistas
     }
     res.locals.artist = decoded; // Almacenar la información del artista en res.locals
@@ -69,3 +71,4 @@ export const artistAuth = (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).send("Token inválido"); // Token no válido
   }
 };
+

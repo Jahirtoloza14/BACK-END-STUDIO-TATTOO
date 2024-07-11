@@ -71,7 +71,7 @@ export const authorizeMiddleware=(allowedRoles:string[])=>{
       return next();
     }
       else{
-                res.status(401).json({message:"Unauthorized"})
+                res.status(401).json({message:"no authorized"})
 
          
         
@@ -98,6 +98,23 @@ export const authorizeMiddlewareAdmin=(allowedRoles:string[])=>{
   }
 }
 
+export const authorizeMiddlewareArtist=(allowedRoles:string[])=>{
+
+  return (req:Request,res:Response,next:NextFunction)=>{
+      const userRole = req.tokenData.role_name;
+
+      if(userRole === UserRoles.ARTIST.role_name){
+          return next();
+      }
+   
+      else{
+                res.status(401).json({message:"NO PASS , Unauthorized"})
+
+         
+        
+      }
+  }
+}
 
 export { isSuperAdmin }
 

@@ -1,12 +1,12 @@
 import express from "express";
 
 
-import { artistAuth } from "../middlewares/isArtist";
+import { artistAuth, artistMiddleware, isArtist } from "../middlewares/isArtist";
 
 
 import { auth } from "../middlewares/auth";
-import { authorizeMiddleware, isSuperAdmin } from "../middlewares/SuperAdmin";
-import { createAppointments, getAllApointments } from "../controllers/AppointmentController";
+import { authorizeMiddleware, authorizeMiddlewareAdmin, authorizeMiddlewareArtist, isSuperAdmin } from "../middlewares/SuperAdmin";
+import { AppointmentController, createAppointments, deleteAppointment, getAllApointments, getByLogedArtist, updateAppointment } from "../controllers/AppointmentController";
 
 
 
@@ -14,19 +14,19 @@ const router = express.Router();
 
 
 // ver todas las citas 
-router.get("/get",auth,authorizeMiddleware(["Admin"]), getAllApointments);
+router.get("/get",auth,authorizeMiddlewareAdmin(["Admin"]), getAllApointments);
 
 // crear una cita
-router.post("/newAppointment",auth,authorizeMiddleware(["Client"]),createAppointments );
+router.post("/newAppointment",AppointmentController.createAppointment );
 
 // buscar una cita por id
-router.get("/mysessions/:id", );
+router.get("/mysessions/:id",auth,authorizeMiddleware(["Client"]) );
 
 // ver citas  por un artista
-router.get("/myappointments/:id", );
+router.get("/myappointments/:id",auth,authorizeMiddlewareArtist(["Artist"]),getByLogedArtist);
 
 // eliminar cita
-router.delete("/delete/:id", );
+router.delete("/delete/:id",auth,authorizeMiddleware(["Client"]),deleteAppointment );
 // actualizar cita
-router.patch("/:id", );
+router.put("/:id",updateAppointment );
 export default router;

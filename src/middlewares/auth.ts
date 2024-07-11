@@ -25,7 +25,7 @@ export const auth = (req:Request,res:Response,next:NextFunction) => {
           ) as JwtPayload
    
       req.tokenData = {
-          id: decoded.user_id,
+          id: decoded.id,
           role_name: decoded.role_name,
           }
       
