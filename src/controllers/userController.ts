@@ -3,7 +3,7 @@ import { User } from "../models/User";
 import bcrypt from 'bcrypt';
 import {TokenData} from "../types/types";
 import { dataSource } from "../database/data-source";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import { UserRoles } from "../constants/UserRoles";
 
@@ -21,7 +21,8 @@ export const UserControler = {
         last_name: last_name,
         email: email,
         password: bcrypt.hashSync(password, 10),
-        role_name: UserRoles.ADMIN.role_name
+        role_name: UserRoles.ARTIST.role_name
+
 
       });
 
@@ -54,6 +55,7 @@ export const UserControler = {
       }
       // Encontrar un usuario por email
       const user = await User.findOne({
+        relations:{role:true},
         where: {
           email: email,
         },
@@ -85,9 +87,6 @@ export const UserControler = {
       }
 
     
-
-
-
         //generar user Role Name
       const roleName = user.role_name;
       const tokenPayload: TokenData ={

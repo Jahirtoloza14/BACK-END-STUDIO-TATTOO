@@ -20,6 +20,7 @@ email!: string
 @Column({ name: "password" })
 password!: string
 
+
 @Column({ name: "role_name" })
 role_name!: string
 

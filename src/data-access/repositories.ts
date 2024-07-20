@@ -1,4 +1,4 @@
-import { dataSource } from "../database/data-source";
+import { dataSource } from "../database/seeders/data-source";
 import { User } from "../models/User";
 import { Appointment } from "../models/Appointment";
 import { Artist } from "../models/Artist";

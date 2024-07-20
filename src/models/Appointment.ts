@@ -28,11 +28,11 @@ export class Appointment extends BaseEntity {
     @Column()
     location!: string;
 
-    @ManyToOne(() => User, (user) => user.appointments)
+    @ManyToOne(() => User, (user) => user.id)
     @JoinColumn({ name: "user_id", referencedColumnName: "id" })
     users!: User;
 
-    @ManyToOne(() => Artist, (artist) => artist.appointments)
+    @ManyToOne(() => Artist, (artist) => artist.id)
     @JoinColumn({ name: "artist_id", referencedColumnName: "id" })
     artists!: Artist;
 

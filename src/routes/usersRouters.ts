@@ -1,11 +1,8 @@
 import express, { NextFunction } from "express";
 import { UserControler } from "../controllers/userController";
-
-import { authorizeMiddleware, authorizeMiddlewareAdmin, isSuperAdmin } from "../middlewares/SuperAdmin";
+import { authorizeMiddleware, authorizeMiddlewareAdmin } from "../middlewares/SuperAdmin";
 import { artistAuth, isArtist } from "../middlewares/isArtist";
 import { auth } from "../middlewares/auth";
-import { Appointment } from "../models/Appointment";
-import { createAppointments, getAllApointments } from "../controllers/AppointmentController";
 
 
 const router = express.Router();

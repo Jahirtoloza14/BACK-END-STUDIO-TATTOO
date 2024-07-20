@@ -8,12 +8,16 @@ export class Artist extends BaseEntity {
     id?: number;
 
     @Column()
-    name!: string;
+    first_name!: string;
 
-    @OneToOne(() => User, user => user.artist)
+    @Column()
+    last_name!: string;
+
+     @Column()
+    porfolio!: string;
+
+    @OneToOne(() => User, user => user.id)
     @JoinColumn({ name: "user_id" })
     user!: User;
 
-    @OneToMany(() => Appointment, (appointment) => appointment.artists)
-    appointments!: Appointment[];
 }

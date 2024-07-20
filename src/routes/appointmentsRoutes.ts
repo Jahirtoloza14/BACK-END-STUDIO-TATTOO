@@ -1,17 +1,11 @@
 import express from "express";
-
-
-import { artistAuth, artistMiddleware, isArtist } from "../middlewares/isArtist";
-
-
 import { auth } from "../middlewares/auth";
 import { authorizeMiddleware, authorizeMiddlewareAdmin, authorizeMiddlewareArtist, isSuperAdmin } from "../middlewares/SuperAdmin";
-import { AppointmentController, createAppointments, deleteAppointment, getAllApointments, getByLogedArtist, updateAppointment } from "../controllers/AppointmentController";
+import { AppointmentController, deleteAppointment, getAllApointments, getByLogedArtist, updateAppointment } from "../controllers/AppointmentController";
 
 
 
 const router = express.Router();
-
 
 // ver todas las citas 
 router.get("/get",auth,authorizeMiddlewareAdmin(["Admin"]), getAllApointments);
