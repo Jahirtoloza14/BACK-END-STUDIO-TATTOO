@@ -6,22 +6,22 @@ import { User } from "../../models/User";
 import { getRandomValueFromArray } from "../../helpers/commons";
 
 
-export class ArtistSeeder extends Seeder{
-    protected async generate():Promise <void>{
-        const {ARTISTS} = SeederConfig;
+export class ArtistSeeder extends Seeder {
+    protected async generate(): Promise<void> {
+        const { ARTISTS } = SeederConfig;
 
         const users = await User.find(
             {
-                where:{
-                    role:{
-                        id:2
+                where: {
+                    role: {
+                        id: 3
                     }
                 }
             }
         );
         const artists = new ArtistFactory().createMany(ARTISTS);
-        artists.forEach(artist =>{
-            artist.user= getRandomValueFromArray(users)
+        artists.forEach(artist => {
+            artist.user = getRandomValueFromArray(users)
         })
         await Artist.save(artists);
     }

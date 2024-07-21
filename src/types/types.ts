@@ -17,7 +17,7 @@ export interface CreateUserRequestBody {
   }
   export interface TokenData {
     id: number,
-    role_name: string;
+    role: string;
     
   }
   export interface CreateArtistRequestBody {

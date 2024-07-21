@@ -2,13 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from "../config/config";
-import { Artist } from "../models/Artist";
-import { Appointment } from "../models/Appointment";
 
 export const isArtist = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.tokenData);
 
-  const roles = req.tokenData.role_name;
+  const roles = req.tokenData.role;
 
   if (!roles.includes("artist")) {
     return res.status(StatusCodes.FORBIDDEN).json({
@@ -54,7 +52,7 @@ export const artistMiddleware = (req: Request, res: Response, next: NextFunction
 // Middleware para verificar el token de artista
 export const artistAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
-  
+
   if (!token) {
     return res.status(401).send("Requiere autorización"); // No se proporcionó ningún token
   }

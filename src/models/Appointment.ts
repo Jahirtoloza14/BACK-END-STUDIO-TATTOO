@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne,JoinColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
 import { User } from './User';
 import { Artist } from './Artist';
 
-@Entity()
+@Entity("appointment")
 export class Appointment extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
@@ -22,18 +22,18 @@ export class Appointment extends BaseEntity {
     @Column({ type: 'datetime' })
     end_time!: Date;
 
-   
+
 
 
     @Column()
     location!: string;
 
-    @ManyToOne(() => User, (user) => user.id)
-    @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+    @ManyToOne(() => User, (users) => users.id)
+    @JoinColumn({ name: "user_id" })
     users!: User;
 
-    @ManyToOne(() => Artist, (artist) => artist.id)
-    @JoinColumn({ name: "artist_id", referencedColumnName: "id" })
+    @ManyToOne(() => Artist, (artists) => artists.id)
+    @JoinColumn({ name: "artist_id" })
     artists!: Artist;
 
 }

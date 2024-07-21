@@ -61,6 +61,6 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 - Lenguaje:  **TypeScript**.
 
 ## Base de Datos Relacional
-![Database](./diagrama.png)
+![Database](./imagenes//DiagramaDatabase.png)
 
 

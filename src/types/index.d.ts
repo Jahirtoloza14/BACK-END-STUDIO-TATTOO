@@ -1,9 +1,7 @@
 import { TokenData } from "./types";
 
 
-
-
-export{}
+export { }
 
 declare global {
    // Express

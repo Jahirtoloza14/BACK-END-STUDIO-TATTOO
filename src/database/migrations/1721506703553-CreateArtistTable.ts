@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateUsersTable1710316953894 implements MigrationInterface {
+export class CreateArtistTable1721506703553 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "user",
+                name: "artist",
                 columns: [
                     {
                         name: "id",
@@ -14,41 +14,47 @@ export class CreateUsersTable1710316953894 implements MigrationInterface {
                         isGenerated: true,
                         generationStrategy: "increment",
                     },
-                   
+                    {
+                        name: "user_id",
+                        type: "int",
+                    },
                     {
                         name: "first_name",
                         type: "varchar",
                         length: "255",
+                        default: null,
+
                     },
                     {
                         name: "last_name",
                         type: "varchar",
                         length: "255",
+                        default: null,
                     },
                     {
-                        name: "email",
+                        name: "porfolio",
                         type: "varchar",
-                        length: "255",
-                      
+                        length: "50",
+                        default: null,
                     },
-                    {
-                        name: "password",
-                        type: "varchar",
-                        length: "255",
-                    }, {
-                        name: "role_name",
-                        type: "varchar",
-                     
-                      },
+
+
+
                 ],
-                
+                foreignKeys: [
+                    {
+                        columnNames: ["user_id"],
+                        referencedTableName: "user",
+                        referencedColumnNames: ["id"],
+
+                    }]
             }),
             true
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("user");
+        await queryRunner.dropTable("artist");
     }
 
 }

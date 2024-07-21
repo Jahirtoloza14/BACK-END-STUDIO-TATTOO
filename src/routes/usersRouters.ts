@@ -1,14 +1,15 @@
 import express, { NextFunction } from "express";
 import { UserControler } from "../controllers/userController";
 import { authorizeMiddleware, authorizeMiddlewareAdmin } from "../middlewares/SuperAdmin";
-import { artistAuth, isArtist } from "../middlewares/isArtist";
+import { artistAuth } from "../middlewares/isArtist";
 import { auth } from "../middlewares/auth";
+
 
 
 const router = express.Router();
 
 
-// endpoint registro
+// endpoint register
 router.post("/register",UserControler.register);
 
 // endpoint login
@@ -20,27 +21,17 @@ router.get("/getall",auth,authorizeMiddlewareAdmin(["Admin"]), UserControler.get
 // endpoint ver  por usuario
 router.get("/profile",auth,authorizeMiddleware(["Client","Artist","Admin"]), UserControler.getLogedUser);
 
-
+// endpoint actualizar perfil
 router.put('/profile/update', UserControler.updateLogedUser);
-
-
-
 
 // endpoint ver todos los artistas 
 router.get("/artists/list");
 
 // crear artistas 
-router.post("/artists/create");
+router.post("/artists/create",UserControler.registerArtist);
 
 // eliminar 
 router.delete("/artists/delete",artistAuth);
-
-
-
-
-
-
-
 
 export default router;
 

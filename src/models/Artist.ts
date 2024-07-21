@@ -1,8 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany,BaseEntity, OneToOne, JoinColumn } from 'typeorm';
-import { Appointment } from './Appointment';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 
-@Entity()
+@Entity("artist")
 export class Artist extends BaseEntity {
     @PrimaryGeneratedColumn()
     id?: number;
@@ -13,7 +12,10 @@ export class Artist extends BaseEntity {
     @Column()
     last_name!: string;
 
-     @Column()
+    @Column({ name: "user_id" })
+    user_id!: number;
+
+    @Column()
     porfolio!: string;
 
     @OneToOne(() => User, user => user.id)
