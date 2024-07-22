@@ -56,8 +56,10 @@ El proyecto consiste en desarrollar una API RESTful para la gestión de citas  d
 6. 
 
 ## Tecnologías
+-  **Javascript**.
+-  **Express.js**.
 - ORM: **TypeOrm**.
-- Lenguaje:  **TypeScript**.
+-  **TypeScript**.
 
 ## Base de Datos Relacional
 ![Database](./imagenes//DiagramaDatabase.png)
