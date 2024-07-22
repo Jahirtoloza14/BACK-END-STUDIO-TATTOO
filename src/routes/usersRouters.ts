@@ -9,7 +9,13 @@ import { auth } from "../middlewares/auth";
 const router = express.Router();
 
 
-// endpoint register
+// endpoint register admin
+router.post("/registerAdmin",UserControler.registerAdmin);
+
+// endpoint register artist
+router.post("/registerArtist",UserControler.registerArtist);
+
+// endpoint register client
 router.post("/register",UserControler.register);
 
 // endpoint login
@@ -27,11 +33,6 @@ router.put('/profile/update', UserControler.updateLogedUser);
 // endpoint ver todos los artistas 
 router.get("/artists/list");
 
-// crear artistas 
-router.post("/artists/create",UserControler.registerArtist);
-
-// eliminar 
-router.delete("/artists/delete",artistAuth);
 
 export default router;
 
