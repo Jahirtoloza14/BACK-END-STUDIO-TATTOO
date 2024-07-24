@@ -10,10 +10,10 @@ export class Appointment extends BaseEntity {
     @Column()
     title!: string;
 
-    @Column()
+    @Column({name: "user_id"})
     user_id!: number;
 
-    @Column()
+    @Column({name: "artist_id"})
     artist_id!: number;
 
     @Column({ type: 'datetime' })

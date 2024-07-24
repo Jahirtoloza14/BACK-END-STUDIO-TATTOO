@@ -41,7 +41,7 @@ export const UserControler = {
       }); return
     }
   },
-  // registrar usuario como rol Cliente
+  // registrar usuario como rol artista
   async registerArtist(req: Request, res: Response): Promise<void> {
     const userRepository = dataSource.getRepository(User);
     const { first_name, last_name, email, password } = req.body;

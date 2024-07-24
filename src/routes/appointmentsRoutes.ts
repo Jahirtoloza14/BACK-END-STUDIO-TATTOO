@@ -8,10 +8,10 @@ import { AppointmentController, deleteAppointment, getAllApointments, getByLoged
 const router = express.Router();
 
 // ver todas las citas 
-router.get("/get", auth, authorizeMiddlewareAdmin(["Admin"]), getAllApointments);
+router.get("/get", getAllApointments);
 
 // crear una cita
-router.post("/newAppointment", AppointmentController.createAppointment);
+router.post("/newAppointment",auth,authorizeMiddlewareArtist(["Artist"]), AppointmentController.createAppointment);
 
 // buscar una cita por id
 router.get("/mysessions/:id", auth, authorizeMiddleware(["Client"]));

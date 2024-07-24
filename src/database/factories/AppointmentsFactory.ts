@@ -11,8 +11,8 @@ export class AppointmentsFactory extends Factory<Appointment> {
                 "piercing",
 
             ]),
-            user_id: faker.number.int({ min: 1, max: 1000 }),
-            artist_id: faker.number.int({ min: 1, max: 1000 }),
+            user_id: faker.number.int({ min: 1, max: 20 }),
+            artist_id: faker.number.int({ min: 1, max: 10 }),
             start_time: faker.date.future(),
             end_time: faker.date.future(),
             location: faker.location.city(),
