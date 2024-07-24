@@ -74,7 +74,7 @@ export const UserControler = {
 
 
 
-  // registrar usuario como rol Cliente
+  // registrar usuario como rol Admin
   async registerAdmin(req: Request, res: Response): Promise<void> {
     const userRepository = dataSource.getRepository(User);
     const { first_name, last_name, email, password } = req.body;

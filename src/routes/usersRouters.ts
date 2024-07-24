@@ -1,7 +1,6 @@
-import express, { NextFunction } from "express";
+import express from "express";
 import { UserControler } from "../controllers/userController";
 import { authorizeMiddleware, authorizeMiddlewareAdmin } from "../middlewares/SuperAdmin";
-import { artistAuth } from "../middlewares/isArtist";
 import { auth } from "../middlewares/auth";
 
 
