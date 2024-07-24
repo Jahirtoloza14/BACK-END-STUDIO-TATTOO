@@ -76,14 +76,14 @@ export const deleteAppointment = async (req: Request, res: Response) => {
 export const AppointmentController = {
   async createAppointment(req: Request, res: Response): Promise<void> {
 
-    const { title, users, artists, start_time, end_time, location } = req.body;
+    const { title, artist_id, user_id, start_time, end_time, location } = req.body;
 
     try {
       const newAppointment = Appointment.create({
 
         title,
-        user_id: users,
-        artist_id: artists,
+        user_id,
+        artist_id,
         start_time: new Date(start_time),
         end_time: new Date(end_time),
         location
