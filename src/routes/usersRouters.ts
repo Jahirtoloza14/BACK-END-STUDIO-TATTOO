@@ -30,8 +30,7 @@ router.get("/profile",auth,authorizeMiddleware(["Client","Artist","Admin"]), Use
 // endpoint actualizar perfil
 router.put('/profile/update', UserControler.updateLogedUser);
 
-// endpoint ver todos los artistas 
-router.get("/artists/list");
+
 
 
 export default router;
