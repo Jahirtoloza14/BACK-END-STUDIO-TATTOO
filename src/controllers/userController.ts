@@ -190,10 +190,9 @@ export const UserControler = {
   // mostrar todos los usuarios
   async getAll(req: Request, res: Response) {
     try {
-      const page = Number(req.query.page) || 1;
-      const limit = Number(req.query.limit) || 10;
+      
 
-      const [users, totalUsers] = await User.findAndCount(
+      const [users] = await User.findAndCount(
         
         {
           relations:{
