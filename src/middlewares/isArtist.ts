@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from "../config/config";
 
 export const isArtist = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.tokenData);
+  
 
   const roles = req.tokenData.role;
 

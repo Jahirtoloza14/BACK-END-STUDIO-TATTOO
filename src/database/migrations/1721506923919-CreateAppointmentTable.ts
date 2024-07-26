@@ -46,7 +46,7 @@ export class CreateAppointmentTable1721506923919 implements MigrationInterface {
             name: "location",
             type: "varchar"
           }
-
+        
         ],
         foreignKeys: [
           {

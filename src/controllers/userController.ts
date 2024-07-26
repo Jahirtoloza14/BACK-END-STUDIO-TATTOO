@@ -9,6 +9,7 @@ import { UserRoles } from "../constants/UserRoles";
 
 
 
+
 export const UserControler = {
 
   // registrar usuario como rol Cliente
@@ -193,13 +194,14 @@ export const UserControler = {
       const limit = Number(req.query.limit) || 10;
 
       const [users, totalUsers] = await User.findAndCount(
-
+        
         {
           select: {
             id: true,
             first_name: true,
             last_name: true,
             email: true,
+           
             role: {
               name: true
             }
@@ -221,9 +223,10 @@ export const UserControler = {
       const userId = req.tokenData?.id;
       console.log(userId);
       const user = await User.findOne({
-        relations: {
-          role: true
-        },
+        relations:{
+          role:true
+          
+          },
         where: {
           id: userId,
         }

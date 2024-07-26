@@ -79,7 +79,7 @@ export const AppointmentController = {
     
 
     try {
-      const { title, artist_id, user_id, start_time, end_time, location } = req.body;
+      const { title, user_id, artist_id, start_time, end_time, location } = req.body;
       const newAppointment =  Appointment.create({
 
         title,

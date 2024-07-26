@@ -5,14 +5,14 @@ import { Factory } from "./Factory";
 export class AppointmentsFactory extends Factory<Appointment> {
     protected generate(): Appointment {
         return {
-            id: faker.number.int({ min: 1, max: 1000 }),
+           
             title: faker.helpers.arrayElement([
                 "tattoo",
                 "piercing",
 
             ]),
-            user_id: faker.number.int({ min: 1, max: 20 }),
-            artist_id: faker.number.int({ min: 1, max: 10 }),
+            user_id: faker.number.int({ min: 1, max: 5 }),
+            artist_id: faker.number.int({ min: 1, max: 5 }),
             start_time: faker.date.future(),
             end_time: faker.date.future(),
             location: faker.location.city(),

@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/get", getAllApointments);
 
 // crear una cita
-router.post("/newAppointment",auth,authorizeMiddlewareArtist(["Artist"]), AppointmentController.createAppointment);
+router.post("/newAppointment", AppointmentController.createAppointment);
 
 // buscar una cita por id
 router.get("/mysessions/:id", auth, authorizeMiddleware(["Client"]));

@@ -22,11 +22,9 @@ export class Appointment extends BaseEntity {
     @Column({ type: 'datetime' })
     end_time!: Date;
 
-
-
-
     @Column()
     location!: string;
+    
 
     @ManyToOne(() => User, (users) => users.id)
     @JoinColumn({ name: "user_id" })
