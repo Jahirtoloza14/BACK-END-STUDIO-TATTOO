@@ -196,17 +196,11 @@ export const UserControler = {
       const [users, totalUsers] = await User.findAndCount(
         
         {
-          select: {
-            id: true,
-            first_name: true,
-            last_name: true,
-            email: true,
-           
-            role: {
-              name: true
+          relations:{
+            role:true
+            
             }
-
-          }
+       
 
         }
       );
