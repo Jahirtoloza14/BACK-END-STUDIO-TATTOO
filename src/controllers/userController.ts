@@ -190,16 +190,16 @@ export const UserControler = {
   // mostrar todos los usuarios
   async getAll(req: Request, res: Response) {
     try {
-      
+
 
       const [users] = await User.findAndCount(
-        
+
         {
-          relations:{
-            role:true
-            
-            }
-       
+          relations: {
+            role: true
+
+          }
+
 
         }
       );
@@ -216,20 +216,25 @@ export const UserControler = {
       const userId = req.tokenData?.id;
       console.log(userId);
       const user = await User.findOne({
-        relations:{
-          role:true
-          
-          },
+        relations: {
+          role: true
+
+        },
         where: {
           id: userId,
         }
       });
-      res.json(user).status(200).json({ message: "User found successfully" });
-      return
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+
+      res.json(user);
     } catch (error) {
-      res.status(500).json({ message: "Something went wrong" });
+      res.status(500).json({
+        message: "Failed to get user profile"
+      })
     }
-    return
   },
 
   // actualizar usuario

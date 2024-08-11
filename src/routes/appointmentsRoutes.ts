@@ -23,5 +23,5 @@ router.get("/myappointments/:id", auth, authorizeMiddlewareArtist(["Artist"]), g
 router.delete("/delete/:id", auth, authorizeMiddleware(["Client"]), deleteAppointment);
 
 // actualizar cita
-router.put("/:id", auth, authorizeMiddlewareAdmin(["Admin"]), updateAppointment);
+router.put("/:id", updateAppointment);
 export default router;
