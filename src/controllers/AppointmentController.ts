@@ -37,7 +37,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
     const appointmentDate = await Appointment.findOne({ where: { id: id } });
 
     if (!appointmentDate) {
-      res.status(404).json({ message: "appointment not found" });
+      res.status(404).json({ message: "Cita no encontrada" });
       return;
     }
     appointmentDate.id = id;
@@ -60,11 +60,11 @@ export const deleteAppointment = async (req: Request, res: Response) => {
     const id = Number(req.tokenData.id);
     const appointmentDate = await Appointment.findOne({ where: { id: id } });
     if (!appointmentDate) {
-      res.status(404).json({ message: "appoitment not found" });
+      res.status(404).json({ message: "Cita no encontrada" });
       return;
     }
     await appointmentDate.remove();
-    res.json({ message: "Appointment deleted" });
+    res.json({ message: "Cita eliminada" });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -91,13 +91,13 @@ export const AppointmentController = {
 
       await Appointment.save(newAppointment);
       res.status(201).json({
-        message: "Appointment created successfully",
+        message: "Cita creada exitosamente",
         appointment: newAppointment
       });
     } catch (error) {
-      console.error('Error creating appointment:', error);
+      console.error('Error al crear la cita:', error);
       res.status(500).json({
-        message: "Error creating appointment",
+        message: "Erro al crear la cita",
 
       });
     }
@@ -110,7 +110,7 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
   const artist = Number(req.tokenData.id);
   const providedArtistId = Number(req.params.id);
   if (artist !== providedArtistId) {
-    return res.status(403).json({ error: 'Unauthorized:' });
+    return res.status(403).json({ error: 'No Autorizado:' });
   }
 
   const appointments = await Appointment.find({

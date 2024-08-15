@@ -225,7 +225,7 @@ export const UserControler = {
         }
       });
       if (!user) {
-        res.status(404).json({ message: "User not found" });
+        res.status(404).json({ message: "Usuario no encontrado" });
         return;
       }
 
@@ -245,7 +245,7 @@ export const UserControler = {
       const user = await User.findOne({ where: { id: userId } });
 
       if (!user) {
-        res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
+        res.status(StatusCodes.NOT_FOUND).json({ message: "Usuario no encontrado" });
         return;
       }
 
