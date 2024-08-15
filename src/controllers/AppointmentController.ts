@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Appointment } from "../models/Appointment";
+import { User } from "../models/User";
 
 
 
@@ -127,6 +128,7 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
       start_time: true,
       end_time: true,
       title: true,
+      location:true,
       artists: {
         id: true,
         user: {
@@ -138,6 +140,36 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
     },
     where: {
       artist_id: artist
+    }
+  });
+
+  res.json(jobdates).status(200);
+
+}
+export const getByLogedClient = async (req: Request, res: Response) => {
+
+  const artist = Number(req.tokenData.id);
+  
+
+  const jobdates = await Appointment.find({
+
+    relations: {
+      artists: true,
+      users: true,
+    },
+    select: {
+      id: true,
+      title: true,
+      artist_id: true,
+      start_time: true,
+      end_time: true,
+      location:true
+      
+      },
+
+   
+    where: {
+      user_id: artist
     }
   });
 

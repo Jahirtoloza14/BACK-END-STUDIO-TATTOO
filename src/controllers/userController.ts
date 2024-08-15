@@ -214,7 +214,7 @@ export const UserControler = {
   async getLogedUser(req: Request, res: Response) {
     try {
       const userId = req.tokenData?.id;
-      console.log(userId);
+    
       const user = await User.findOne({
         relations: {
           role: true

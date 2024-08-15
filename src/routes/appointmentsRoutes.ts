@@ -1,7 +1,7 @@
 import express from "express";
 import { auth } from "../middlewares/auth";
 import { authorizeMiddleware, authorizeMiddlewareAdmin, authorizeMiddlewareArtist } from "../middlewares/SuperAdmin";
-import { AppointmentController, deleteAppointment, getAllApointments, getByLogedArtist, updateAppointment } from "../controllers/AppointmentController";
+import { AppointmentController, deleteAppointment, getAllApointments, getByLogedArtist, getByLogedClient, updateAppointment } from "../controllers/AppointmentController";
 
 
 
@@ -14,7 +14,7 @@ router.get("/get", getAllApointments);
 router.post("/newAppointment", AppointmentController.createAppointment);
 
 // buscar una cita por id
-router.get("/mysessions/:id", auth, authorizeMiddleware(["Client"]));
+router.get("/myappointment/appointment", auth, authorizeMiddleware(["Client"]),getByLogedClient);
 
 // ver citas  por un artista
 router.get("/myappointments/:id", auth, authorizeMiddlewareArtist(["Artist"]), getByLogedArtist);
