@@ -1,16 +1,14 @@
 import { Request, Response } from "express";
 import { Appointment } from "../models/Appointment";
-import { User } from "../models/User";
+
 
 
 
 // mostrar todas las citas 
 export const getAllApointments = async (req: Request, res: Response) => {
   try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
 
-    const [jobdates] = await Appointment.findAndCount(
+    const [appointments] = await Appointment.findAndCount(
       {
         select: {
           id: true,
@@ -24,7 +22,7 @@ export const getAllApointments = async (req: Request, res: Response) => {
       }
     );
 
-    res.json(jobdates);
+    res.json(appointments);
 
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
@@ -39,7 +37,7 @@ export const updateAppointment = async (req: Request, res: Response) => {
     const appointmentDate = await Appointment.findOne({ where: { id: id } });
 
     if (!appointmentDate) {
-      res.status(404).json({ message: "Jobdate not found" });
+      res.status(404).json({ message: "appointment not found" });
       return;
     }
     appointmentDate.id = id;
@@ -62,11 +60,11 @@ export const deleteAppointment = async (req: Request, res: Response) => {
     const id = Number(req.tokenData.id);
     const appointmentDate = await Appointment.findOne({ where: { id: id } });
     if (!appointmentDate) {
-      res.status(404).json({ message: "Jobdate not found" });
+      res.status(404).json({ message: "appoitment not found" });
       return;
     }
     await appointmentDate.remove();
-    res.json({ message: "Jobdate deleted" });
+    res.json({ message: "Appointment deleted" });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -77,17 +75,17 @@ export const deleteAppointment = async (req: Request, res: Response) => {
 export const AppointmentController = {
   async createAppointment(req: Request, res: Response): Promise<void> {
 
-    
+
 
     try {
       const { title, user_id, artist_id, start_time, end_time, location } = req.body;
-      const newAppointment =  Appointment.create({
+      const newAppointment = Appointment.create({
 
         title,
         user_id,
         artist_id,
         start_time: new Date(start_time),
-       end_time: new Date(end_time),
+        end_time: new Date(end_time),
         location
       });
 
@@ -115,7 +113,7 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
     return res.status(403).json({ error: 'Unauthorized:' });
   }
 
-  const jobdates = await Appointment.find({
+  const appointments = await Appointment.find({
 
     relations: {
 
@@ -128,7 +126,7 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
       start_time: true,
       end_time: true,
       title: true,
-      location:true,
+      location: true,
       artists: {
         id: true,
         user: {
@@ -143,15 +141,15 @@ export const getByLogedArtist = async (req: Request, res: Response) => {
     }
   });
 
-  res.json(jobdates).status(200);
+  res.json(appointments).status(200);
 
 }
 export const getByLogedClient = async (req: Request, res: Response) => {
 
-  const artist = Number(req.tokenData.id);
-  
+  const client = Number(req.tokenData.id);
 
-  const jobdates = await Appointment.find({
+
+  const appointments = await Appointment.find({
 
     relations: {
       artists: true,
@@ -163,16 +161,16 @@ export const getByLogedClient = async (req: Request, res: Response) => {
       artist_id: true,
       start_time: true,
       end_time: true,
-      location:true
-      
-      },
+      location: true
 
-   
+    },
+
+
     where: {
-      user_id: artist
+      user_id: client
     }
   });
 
-  res.json(jobdates).status(200);
+  res.json(appointments).status(200);
 
 }
