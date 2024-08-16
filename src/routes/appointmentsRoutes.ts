@@ -1,6 +1,6 @@
 import express from "express";
 import { auth } from "../middlewares/auth";
-import { authorizeMiddleware, authorizeMiddlewareAdmin, authorizeMiddlewareArtist } from "../middlewares/SuperAdmin";
+import { authorizeMiddleware, authorizeMiddlewareArtist } from "../middlewares/SuperAdmin";
 import { AppointmentController, deleteAppointment, getAllApointments, getByLogedArtist, getByLogedClient, updateAppointment } from "../controllers/AppointmentController";
 
 
